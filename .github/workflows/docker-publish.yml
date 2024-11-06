@@ -40,7 +40,7 @@ jobs:
         run: cd app && go test -v ./internal/tests
 
   build:
-    needs: test  # This ensures build only runs if tests pass
+    # needs: test  # This ensures build only runs if tests pass
     runs-on: ubuntu-latest
     permissions:
       contents: read

@@ -428,5 +428,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-auth-service/cmd/web/main
-product-service/cmd/web/main
+app/cmd/web/main
+app/cmd/web/main

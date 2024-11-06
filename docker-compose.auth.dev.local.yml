@@ -1,0 +1,37 @@
+services:
+  auth-service:
+    build:
+      context: ./app
+      dockerfile: Dockerfile-local
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./app:/app
+    environment:
+      - AUTH_DB_HOST=${AUTH_DB_HOST}
+      - AUTH_DB_USER=${AUTH_DB_USER}
+      - AUTH_DB_PASSWORD=${AUTH_DB_PASSWORD}
+      - AUTH_DB_NAME=${AUTH_DB_NAME}
+      - DB_PORT=${DB_PORT}
+      - DB_SSLMODE=${DB_SSLMODE}
+      - DB_TIMEZONE=${TIMEZONE}
+      - GIN_MODE=${GIN_MODE}
+      - JWT_SECRET=${JWT_SECRET}
+    entrypoint:
+      - ./scripts/dev-entrypoint.sh
+    depends_on:
+      - db-auth
+
+  db-auth:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${AUTH_DB_USER}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
+      POSTGRES_DB: ${AUTH_DB_NAME}
+    volumes:
+      - ./auth-db-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+# volumes:
+#   auth-db-data:

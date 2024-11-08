@@ -1,6 +1,6 @@
 services:
   auth-service:
-    image: ghcr.io/prismedroiteext/bzhspback:auth # TODO: change to correct tag
+    image: ghcr.io/prismedroiteext/bzhspauth
     restart: unless-stopped
     ports:
       - "8082:8082"
@@ -14,8 +14,6 @@ services:
       - DB_TIMEZONE=${TIMEZONE}
       - GIN_MODE=${GIN_MODE}
       - JWT_SECRET=${JWT_SECRET}
-    entrypoint:
-      - ./scripts/dev-entrypoint.sh
     depends_on:
       - db-auth
 
@@ -27,10 +25,6 @@ services:
       POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
       POSTGRES_DB: ${AUTH_DB_NAME}
     volumes:
-      - ./auth-db-data:/var/lib/postgresql/data
+      - ../volumes/auth-db-data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
-
-# volumes:
-#   auth-db-data:
-

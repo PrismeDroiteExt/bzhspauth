@@ -1,0 +1,44 @@
+# Automatically generate documentation using Swaggo's swag library
+name: Generate Docs
+
+on: 
+  push:
+    branches: ["dev"]
+
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.23
+
+      - name: Install Swag  
+        run: |
+          go get -u github.com/swaggo/swag/cmd/swag
+          go get -u github.com/swaggo/gin-swagger
+          go get -u github.com/swaggo/files
+
+      - name: Generate Docs
+        run: |
+          cd app/cmd/web
+          go run github.com/swaggo/swag/cmd/swag init --parseDependency --parseInternal
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "docs: update API documentation" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

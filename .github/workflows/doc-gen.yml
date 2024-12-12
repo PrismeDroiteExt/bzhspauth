@@ -30,6 +30,9 @@ jobs:
         working-directory: app/cmd/web
         run: go run github.com/swaggo/swag/cmd/swag init --parseDependency --parseInternal
 
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
       - name: Commit and push changes
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"

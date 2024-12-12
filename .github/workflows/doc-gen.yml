@@ -3,7 +3,7 @@ name: Generate Docs
 
 on: 
   push:
-    branches: ["dev"]
+    branches: ["dev", "18-failed-doc-gen-job"]
 
 
   # Allows you to run this workflow manually from the Actions tab

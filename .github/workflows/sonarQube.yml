@@ -8,8 +8,8 @@ jobs:
     name: SonarQube
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
+      pull-requests: read
     steps:
       - uses: actions/checkout@v4
         with:

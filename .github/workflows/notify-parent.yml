@@ -1,0 +1,17 @@
+name: Notify Parent Repository of Submodule Update
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  notify-parent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send repository dispatch event to parent repository
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          repository: prismedroiteext/bzhspapp  # Replace with your GitHub username and parent repository name
+          event-type: submodule-updated 
